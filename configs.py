@@ -38,7 +38,7 @@ model_kwargs = [
 
 run_configs = [
     (
-    "he_init - run1",
+    "he_init SGD - run1",
     { "logs_dir": os.path.join(cur_dir, 'runs/run1'),
     "model": Baseline,
     "train_dataloader":train_dataloader,
@@ -46,7 +46,7 @@ run_configs = [
     "epochs": 200,
     "model_kwargs":model_kwargs[0],
     "optimizer_func":
-    lambda x: torch.optim.Adam(x, lr=1e-4, weight_decay=1e-5),
+    lambda x: torch.optim.SGD(x, lr=1e-1, momentum=0.9, weight_decay=1e-4),
     "loss_function": torch.nn.CrossEntropyLoss(),
     "device": DEVICE,
     "use_early_stopper":True,
@@ -66,7 +66,7 @@ run_configs = [
     "epochs": 200,
     "model_kwargs":model_kwargs[0],
     "optimizer_func":
-    lambda x: torch.optim.Adam(x, lr=1e-4, weight_decay=1e-5),
+    lambda x: torch.optim.Adam(x, lr=1e-3, weight_decay=1e-5),
     "loss_function": torch.nn.CrossEntropyLoss(),
     "device": DEVICE,
     "use_early_stopper":True,
@@ -85,7 +85,7 @@ run_configs = [
     "epochs": 200,
     "model_kwargs":model_kwargs[0],
     "optimizer_func":
-    lambda x: torch.optim.Adam(x, lr=1e-4, weight_decay=1e-5),
+    lambda x: torch.optim.Adam(x, lr=1e-3, weight_decay=1e-5),
     "loss_function": torch.nn.CrossEntropyLoss,
     "device": DEVICE,
     "use_early_stopper":True,
