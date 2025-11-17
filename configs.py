@@ -67,7 +67,7 @@ run_configs = [
     "model_kwargs":model_kwargs[0],
     "optimizer_func":
     lambda x: torch.optim.Adam(x, lr=1e-3, weight_decay=1e-5),
-    "loss_function": torch.nn.CrossEntropyLoss,
+    "loss_function": torch.nn.CrossEntropyLoss(),
     "device": DEVICE,
     "use_early_stopper":True,
     "clip_grad_norm":False,
