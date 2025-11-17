@@ -4,7 +4,8 @@ from model import Baseline
 import torch
 import os
 
-DEVICE= torch.device("cuda")
+DEVICE= torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+print("DEVICE: ", DEVICE)
 epochs = 200 
 cur_dir = os.getcwd()
 
