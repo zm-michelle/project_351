@@ -17,7 +17,8 @@ import os
 
 class Baseline(torch.nn.Module):
     def __init__(self, 
-                 input_size: int, 
+                 input_size,
+                 in_channels: int, 
                  hidden_dims:List,
                  layers_per_block:List,
                  apply_pooling:List,
@@ -37,7 +38,7 @@ class Baseline(torch.nn.Module):
 
         self.activation_function = activation_function
         self.blocks = nn.ModuleList()
-        in_channels = input_size
+        
     
          
         for i in range(num_blocks):
@@ -51,9 +52,9 @@ class Baseline(torch.nn.Module):
              )
             self.blocks.append(block)
             in_channels = hidden_dims[i]
-        hidden_dims[i] = self.get_flat_size(input_size).shape[1]
+        flat_size = self.get_flat_size(input_size)
         self.fc = nn.Sequential(
-            nn.Linear(hidden_dims[i], hidden_dims[i+1]),
+            nn.Linear(flat_size, hidden_dims[i+1]),
             activation_function(),
             nn.Dropout(dropout_rate),
             nn.Linear(hidden_dims[i+1], hidden_dims[i+2]),
@@ -65,7 +66,8 @@ class Baseline(torch.nn.Module):
         dummy_input = torch.zeros(1, 3, input_size, input_size)
         for block in self.blocks:
             dummy_input = block(dummy_input)
-        return torch.flatten(dummy_input, start_dim=1)
+        flattened = torch.flatten(dummy_input, start_dim=1)
+        return flattened.shape[1]
     def make_block(
         self,
         in_channels: int,
@@ -89,19 +91,18 @@ class Baseline(torch.nn.Module):
                 padding=kernel_size // 2,
                 bias=False
             ))
-            layers.append(self.activation_function())
-               
-            if apply_pooling:
-                layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
             if apply_bn:
                 layers.append(nn.BatchNorm2d(out_channels))   
+            layers.append(self.activation_function())
+
+        if apply_pooling:
+            layers.append(nn.MaxPool2d(kernel_size=2, stride=2))
         return nn.Sequential(*layers)
         
     def forward(self, x):
         for block in self.blocks:
             x = block(x)
         flat_x = torch.flatten(x, start_dim=1)
-
         logits = self.fc(flat_x)
         return logits
     def count_parameters(self):
