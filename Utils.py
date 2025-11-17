@@ -31,7 +31,7 @@ class EarlyStopper:
             self.min_validation_loss = validation_loss
             self.counter = 0
             
-        elif validation_loss <= self.min_validation_loss:
+        elif validation_loss > self.min_validation_loss:
             self.counter += 1
             if self.counter >= self.patience:
                 return True
@@ -103,7 +103,7 @@ def train_model(
     clip_grad_norm=False,
     weight_init=False,
     use_scheduler=False,
-    scheduler_kwargs={"mode":'min', "factor" :0.5, "patience": 5},
+    scheduler_kwargs={"mode":'min', "factor" :0.1, "patience": 5},
     early_stopping_patience=10,
     early_stopping_target=98.5,
 ):
@@ -144,15 +144,15 @@ def train_model(
         train_loss = train(model, train_dataloader, optimizer, 
                            loss_function, device, clip_grad_norm)
         history['train_loss'].append(train_loss)
-        writer.add_scalar(f'{logs_dir} Loss/train', train_loss, epoch)
+        writer.add_scalar(f'Loss/train', train_loss, epoch)
         
         if test_dataloader is not None:
             test_loss, test_accuracy = test(model, test_dataloader, loss_function, device)
             history['test_loss'].append(test_loss)
             history['test_accuracy'].append(test_accuracy)
             
-            writer.add_scalar(f'{logs_dir} Loss/test', test_loss, epoch)
-            writer.add_scalar(f'{logs_dir} Accuracy/test', test_accuracy, epoch)
+            writer.add_scalar(f'Loss/test', test_loss, epoch)
+            writer.add_scalar(f'Accuracy/test', test_accuracy, epoch)
 
             if use_scheduler:
                 scheduler.step(test_loss)
