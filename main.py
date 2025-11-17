@@ -42,7 +42,7 @@ result = result = {"title": [],
               "test_loss":[], 
               "test_accuracy":[] }
 for run_config in run_configs:
-    title, config  = run_config[0] 
+    title, config  = run_config
     model, train_loss, test_loss, test_accuracy = train_model(**config)
 
     torch.save(model.state_dict(), os.path.join(config['logs_dir'],"model.pth" ))
