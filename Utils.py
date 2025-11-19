@@ -4,6 +4,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torchvision import datasets, transforms
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
+from datetime import datetime
 import torch.optim as optim
 from typing import List
 from tqdm import tqdm
@@ -70,7 +71,7 @@ def test(model,
     correct = 0
     total_loss = 0
     total = 0
-    
+    predictions = []
     model.eval()
     
     with torch.no_grad():
@@ -82,12 +83,13 @@ def test(model,
             total_loss += loss.item()
             
             pred = torch.argmax(y_hat, dim=1)
+            predictions.append(pred)
             correct += (pred == y).sum().item()
             total += y.size(0)
             
     avg_loss = total_loss / len(dataloader)
     accuracy = 100 * correct / total
-    return avg_loss, accuracy
+    return avg_loss, accuracy, predictions
 
 def train_model(
     logs_dir,
@@ -107,6 +109,9 @@ def train_model(
     early_stopping_patience=10,
     early_stopping_target=98.5,
 ):
+    now = datetime.now()
+    formatted_datetime = now.strftime("%Y-%m-%d-%H_%M_%S")
+    logs_dir = logs_dir + '__' + formatted_datetime
     
     os.makedirs(f"{logs_dir}/logs", exist_ok=True)
     os.makedirs(f"{logs_dir}/results", exist_ok=True)
@@ -122,6 +127,7 @@ def train_model(
     else:  # instance
         model = model.to(device)
 
+    print(model)
     optimizer = optimizer_func(model.parameters() )
     
     if use_early_stopper:
@@ -137,7 +143,8 @@ def train_model(
     history = {
         'train_loss': [],
         'test_loss': [],
-        'test_accuracy': []
+        'test_accuracy': [],
+        'predictions': [],
     }
  
     for epoch in tqdm(range(epochs), desc="Training"):
@@ -147,9 +154,10 @@ def train_model(
         writer.add_scalar(f'Loss/train', train_loss, epoch)
         
         if test_dataloader is not None:
-            test_loss, test_accuracy = test(model, test_dataloader, loss_function, device)
+            test_loss, test_accuracy, predictions = test(model, test_dataloader, loss_function, device)
             history['test_loss'].append(test_loss)
             history['test_accuracy'].append(test_accuracy)
+            history['predictions'].append(predictions)
             
             writer.add_scalar(f'Loss/test', test_loss, epoch)
             writer.add_scalar(f'Accuracy/test', test_accuracy, epoch)
