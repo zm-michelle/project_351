@@ -89,6 +89,7 @@ def test(model,
             
     avg_loss = total_loss / len(dataloader)
     accuracy = 100 * correct / total
+    predictions = torch.cat(predictions).cpu().numpy()
     return avg_loss, accuracy, predictions
 
 def train_model(
