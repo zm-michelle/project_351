@@ -43,7 +43,7 @@ run_configs = [
     
     (
     "CIFAR-10",
-    { "logs_dir": os.path.join(cur_dir, 'runs/run2'),
+    { "logs_dir": os.path.join(cur_dir, 'runs/cifar_10'),
     "model": Baseline,
     "train_dataloader":train_dataloader,
     "test_dataloader":test_dataloader,
@@ -62,7 +62,7 @@ run_configs = [
     "early_stopping_target":98.5,}),
     (
     "SVHN",
-    { "logs_dir": os.path.join(cur_dir, 'runs/run2'),
+    { "logs_dir": os.path.join(cur_dir, 'runs/svhn_1'),
     "model": Baseline,
     "train_dataloader": svhn_train_dataloader,
     "test_dataloader": svhn_test_dataloader,
@@ -82,7 +82,7 @@ run_configs = [
 
   (
     "CIFAR-100",
-    { "logs_dir": os.path.join(cur_dir, 'runs/run2'),
+    { "logs_dir": os.path.join(cur_dir, 'runs/cifar_100'),
     "model": Baseline,
     "train_dataloader":cifar_100_train_dataloader,
     "test_dataloader":cifar_100_test_dataloader,

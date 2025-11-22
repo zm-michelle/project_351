@@ -32,13 +32,13 @@ def get_dataloaders( dataset_name, batch_size=256):
             root='../data',
             split='train',
             download=True,
-            transform=None
+            transform=transform
         )
         testset = datasets.SVHN(
             root='../data',
             split='test',
             download=True,
-            transform=None
+            transform=transform
         )
 
     elif dataset_name == "CIFAR-10":
