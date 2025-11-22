@@ -2,6 +2,7 @@ from data import test_dataloader, train_dataloader
 from Utils import train_model, train, test
 from configs import model_kwargs, run_configs
 from matplotlib import pyplot as plt
+from datetime import datetime
 from model import Baseline
 import pandas as pd
 import numpy as np
@@ -43,8 +44,13 @@ result = result = {"title": [],
               "test_accuracy":[] }
 for run_config in run_configs:
     title, config  = run_config
+    now = datetime.now()
+    formatted_datetime = now.strftime("%Y-%m-%d-%H_%M_%S")
+    logs_dir = logs_dir + '__' + formatted_datetime
+    config["logs_dir"] = logs_dir
     model, train_loss, test_loss, test_accuracy = train_model(**config)
 
+      
     torch.save(model.state_dict(), os.path.join(config['logs_dir'],"model.pth" ))
 
     log_results(title, train_loss, test_loss, test_accuracy ,config)

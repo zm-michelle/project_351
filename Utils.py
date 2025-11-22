@@ -110,9 +110,7 @@ def train_model(
     early_stopping_patience=10,
     early_stopping_target=98.5,
 ):
-    now = datetime.now()
-    formatted_datetime = now.strftime("%Y-%m-%d-%H_%M_%S")
-    logs_dir = logs_dir + '__' + formatted_datetime
+    
     
     os.makedirs(f"{logs_dir}/logs", exist_ok=True)
     os.makedirs(f"{logs_dir}/results", exist_ok=True)
