@@ -1,4 +1,3 @@
-from data import test_dataloader, train_dataloader
 from Utils import train_model, train, test
 from configs import model_kwargs, run_configs
 from matplotlib import pyplot as plt
