@@ -5,7 +5,6 @@ from torchvision import datasets, transforms
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import torch.optim as optim
-import tensorflow as tf
 from typing import List
 from tqdm import tqdm
 import torch.nn as nn

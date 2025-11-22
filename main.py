@@ -44,6 +44,7 @@ result = result = {"title": [],
               "test_accuracy":[] }
 for run_config in run_configs:
     title, config  = run_config
+    print("RUNNING: ", title)
     now = datetime.now()
     formatted_datetime = now.strftime("%Y-%m-%d-%H_%M_%S")
     logs_dir = config["logs_dir"]  + '__' + formatted_datetime
