@@ -1,4 +1,4 @@
-from data import test_dataloader, train_dataloader
+from data import get_dataloaders ,test_dataloader, train_dataloader
 from Utils import train_model, train, test
 from model import Baseline
 import torch
@@ -8,6 +8,8 @@ DEVICE= torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu
 print("DEVICE: ", DEVICE)
 epochs = 200 
 cur_dir = os.getcwd()
+
+train_dataloader, test_dataloader = get_dataloaders("SVHN")
 
 model_kwargs = [
     {
