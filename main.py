@@ -46,7 +46,7 @@ for run_config in run_configs:
     title, config  = run_config
     now = datetime.now()
     formatted_datetime = now.strftime("%Y-%m-%d-%H_%M_%S")
-    logs_dir = logs_dir + '__' + formatted_datetime
+    logs_dir = config["logs_dir"]  + '__' + formatted_datetime
     config["logs_dir"] = logs_dir
     model, train_loss, test_loss, test_accuracy = train_model(**config)
 
