@@ -1,5 +1,5 @@
-from data import get_dataloaders ,test_dataloader, train_dataloader
 from Utils import train_model, train, test
+from data import get_dataloaders 
 from model import Baseline
 import torch
 import os
@@ -9,8 +9,9 @@ print("DEVICE: ", DEVICE)
 epochs = 200 
 cur_dir = os.getcwd()
 
-train_dataloader, test_dataloader = get_dataloaders("SVHN")
-
+train_dataloader, test_dataloader = get_dataloaders("CIFAR-10")
+cifar_100_train_dataloader, cifar_100_test_dataloader = get_dataloaders("CIFAR-100")
+svhn_train_dataloader, svhn_test_dataloader = get_dataloaders("SVHN")
 model_kwargs = [
     {
         "input_size": 32 ,
@@ -41,7 +42,7 @@ model_kwargs = [
 run_configs = [
     
     (
-    "no init - run2",
+    "CIFAR-10",
     { "logs_dir": os.path.join(cur_dir, 'runs/run2'),
     "model": Baseline,
     "train_dataloader":train_dataloader,
@@ -60,11 +61,11 @@ run_configs = [
     "early_stopping_patience":10,
     "early_stopping_target":98.5,}),
     (
-    "shallow network - run3",
-    { "logs_dir": os.path.join(cur_dir, 'runs/run3'),
+    "SVHN",
+    { "logs_dir": os.path.join(cur_dir, 'runs/run2'),
     "model": Baseline,
-    "train_dataloader":train_dataloader,
-    "test_dataloader":test_dataloader,
+    "train_dataloader": svhn_train_dataloader,
+    "test_dataloader": svhn_test_dataloader,
     "epochs": 200,
     "model_kwargs":model_kwargs[0],
     "optimizer_func":
@@ -79,21 +80,21 @@ run_configs = [
     "early_stopping_patience":10,
     "early_stopping_target":98.5,}),
 
-    (
-    "he_init SGD - run1",
-    { "logs_dir": os.path.join(cur_dir, 'runs/run1'),
+  (
+    "CIFAR-100",
+    { "logs_dir": os.path.join(cur_dir, 'runs/run2'),
     "model": Baseline,
-    "train_dataloader":train_dataloader,
-    "test_dataloader":test_dataloader,
+    "train_dataloader":cifar_100_train_dataloader,
+    "test_dataloader":cifar_100_test_dataloader,
     "epochs": 200,
     "model_kwargs":model_kwargs[0],
     "optimizer_func":
-    lambda x: torch.optim.SGD(x, lr=1e-2, momentum=0.9, weight_decay=1e-4),
+    lambda x: torch.optim.Adam(x, lr=1e-3, weight_decay=1e-5),
     "loss_function": torch.nn.CrossEntropyLoss(),
     "device": DEVICE,
     "use_early_stopper":True,
     "clip_grad_norm":False,
-    "weight_init":"he",
+    "weight_init":None,
     "use_scheduler":True,
     "scheduler_kwargs":{"mode":'min', "factor" :0.5, "patience": 5},
     "early_stopping_patience":10,

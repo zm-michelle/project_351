@@ -55,9 +55,9 @@ for run_config in run_configs:
 
     log_results(title, train_loss, test_loss, test_accuracy ,config)
     result["title"].append(title if title is not None else 'None')
-    result["train_loss"].append(train_loss if train_loss is not None else None)
-    result["test_loss"].append(test_loss if test_loss is not None else None)
-    result["test_accuracy"].append(test_accuracy if test_accuracy is not None else None)
+    result["train_loss"].append(train_loss[-1] if train_loss is not None else None)
+    result["test_loss"].append(test_loss[-1] if test_loss is not None else None)
+    result["test_accuracy"].append(test_accuracy[-1] if test_accuracy is not None else None)
  
 
 print("\n" + "="*50)
