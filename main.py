@@ -41,6 +41,7 @@ result = result = {"title": [],
               "train_loss":[], 
               "test_loss":[], 
               "test_accuracy":[] }
+
 for run_config in run_configs:
     title, config  = run_config
     print("RUNNING: ", title)
@@ -70,7 +71,7 @@ print(f"\nBEST RUN: {result['title'][best_idx]} | {best_accuracy:.4f}")
 print("="*50 + "\n")
 
 fig, axs = plt.subplots(1, 3, figsize=(15, 5)) 
-for i in range(len(results["title"])):
+for i in range(len(result["title"])):
     axs[0].plot(result["train_loss"][i], label=result["title"][i])
     axs[1].plot(result["test_loss"][i], label=result["title"][i])
     axs[2].plot(result["test_accuracy"][i], label=result["title"][i])
