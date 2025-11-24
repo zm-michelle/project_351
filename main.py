@@ -9,7 +9,7 @@ import torch
 import csv
 import os
 
-EXPERIMENT_LOG_PATH = os.path.join('runs', 'experiment_logs')
+EXPERIMENT_LOG_PATH = os.path.join('runs', 'experiment_logs.csv')
 
 def log_results(title, train_loss, test_loss, test_accuracy ,config):
     row = {
