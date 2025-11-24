@@ -82,22 +82,23 @@ run_configs = [
 
   (
     "CIFAR-100",
-    { "logs_dir": os.path.join(cur_dir, 'runs/cifar_100'),
-    "model": Baseline,
-    "train_dataloader":cifar_100_train_dataloader,
-    "test_dataloader":cifar_100_test_dataloader,
-    "epochs": 200,
-    "model_kwargs":model_kwargs[0],
-    "optimizer_func":
-    lambda x: torch.optim.Adam(x, lr=1e-3, weight_decay=1e-5),
-    "loss_function": torch.nn.CrossEntropyLoss(),
-    "device": DEVICE,
-    "use_early_stopper":True,
-    "clip_grad_norm":False,
-    "weight_init":None,
-    "use_scheduler":True,
-    "scheduler_kwargs":{"mode":'min', "factor" :0.5, "patience": 5},
-    "early_stopping_patience":10,
-    "early_stopping_target":98.5,}),
-
+    { 
+        "logs_dir": os.path.join(cur_dir, 'runs/cifar_100'),
+        "model": Baseline,
+        "train_dataloader":cifar_100_train_dataloader,
+        "test_dataloader":cifar_100_test_dataloader,
+        "epochs": 200,
+        "model_kwargs":model_kwargs[0],
+        "optimizer_func":
+        lambda x: torch.optim.Adam(x, lr=1e-3, weight_decay=1e-5),
+        "loss_function": torch.nn.CrossEntropyLoss(),
+        "device": DEVICE,
+        "use_early_stopper":True,
+        "clip_grad_norm":False,
+        "weight_init":None,
+        "use_scheduler":True,
+        "scheduler_kwargs":{"mode":'min', "factor" :0.5, "patience": 5},
+        "early_stopping_patience":10,
+        "early_stopping_target":98.5,
+    }),
 ]

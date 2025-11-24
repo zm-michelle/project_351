@@ -1,5 +1,7 @@
 from torch.utils.data import DataLoader, Subset, TensorDataset, ConcatDataset, Dataset
 from torchvision.transforms import AutoAugment, AutoAugmentPolicy
+from torch.optim.lr_scheduler import CosineAnnealingLR
+
 from torch.utils.tensorboard import SummaryWriter
 from torchvision import datasets, transforms
 import torch.nn.functional as F
@@ -106,7 +108,7 @@ def train_model(
     clip_grad_norm=False,
     weight_init=False,
     use_scheduler=False,
-    scheduler_kwargs={"mode":'min', "factor" :0.1, "patience": 5},
+    scheduler_kwargs={ "T_max":100, "eta_min":0},
     early_stopping_patience=10,
     early_stopping_target=98.5,
 ):
@@ -135,9 +137,11 @@ def train_model(
             target_val=early_stopping_target )
     
     if use_scheduler:
-        scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer,
-             **scheduler_kwargs
-          )
+        
+        scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, 
+            **scheduler_kwargs
+            )
+    
 
     history = {
         'train_loss': [],

@@ -3,4 +3,4 @@ data
 myenv
 runs
 __pycache__
-configs
+configs.py
