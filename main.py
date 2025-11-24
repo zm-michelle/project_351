@@ -70,20 +70,4 @@ best_idx = result["test_accuracy"].index(best_accuracy)
 print(f"\nBEST RUN: {result['title'][best_idx]} | {best_accuracy:.4f}")
 print("="*50 + "\n")
 
-fig, axs = plt.subplots(1, 3, figsize=(15, 5)) 
-for i in range(len(result["title"])):
-    axs[0].plot(result["train_loss"][i], label=result["title"][i])
-    axs[1].plot(result["test_loss"][i], label=result["title"][i])
-    axs[2].plot(result["test_accuracy"][i], label=result["title"][i])
-
-axs[0].set_title("Train Loss")
-axs[1].set_title("Test Loss")
-axs[2].set_title("Accuracy")
-
-for ax in axs:
-    ax.legend()
-    ax.grid() 
-
-plt.tight_layout()
-plt.savefig("current_runs.png")
 
