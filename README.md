@@ -1,2 +1,2 @@
 # project_351
-Transfer Learning on CIFAR-10 and CIFAR-100
+Transfer Learning from CIFAR-10 to CIFAR-100 and SVHN
