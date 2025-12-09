@@ -1,6 +1,9 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
 from transfer_configs import transfer_learning_configs
-from ..Utils import train_model
-from ..main import log_results
+from Utils import train_model
+from main import log_results
 from datetime import datetime
 import pandas as pd
 import numpy as np

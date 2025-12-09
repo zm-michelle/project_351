@@ -1,4 +1,8 @@
-from ..data import get_dataloaders
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from data import get_dataloaders
 from transfer_learning import create_transfer_learning_model
 import torch
 import os

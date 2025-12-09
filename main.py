@@ -112,5 +112,5 @@ def run_experiments():
         print("="*50 + "\n")
 
 if __name__ == "__main__":
-    results = run_transfer_learning_experiments()
+    results = run_experiments()
 

@@ -1,4 +1,6 @@
 from torchvision.transforms import AutoAugment, AutoAugmentPolicy
+from torch.utils.data import DataLoader
+
 from torch.utils.tensorboard import SummaryWriter
 from torchvision import datasets, transforms
 import torch.nn.functional as F

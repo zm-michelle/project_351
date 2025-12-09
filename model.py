@@ -28,7 +28,7 @@ class Baseline(nn.Module):
         self.in_channels = in_channels
         self.activation_function = activation_function
 
-        # Build convolutional blocks
+        # Build convolutional extraction blocks
         self.blocks = nn.ModuleList()
 
         current_channels = in_channels
@@ -53,10 +53,10 @@ class Baseline(nn.Module):
             
             self.blocks.append(nn.Sequential(*block_layers))
         
-        # Calculate the size after convolutions
+        # Calculate flat size for linear layer
         self.feature_size = self.get_flat_size()
         
-        # Classifier
+        # Fully connected layers
         self.dropout = nn.Dropout(dropout_rate)
         self.fc1 = nn.Linear(self.feature_size, hidden_dims[-2])
         self.fc2 = nn.Linear(hidden_dims[-2], hidden_dims[-1])
