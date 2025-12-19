@@ -84,7 +84,7 @@ model_kwargs =  {
         "layers_per_block":[1,1,1,1,1,1], # Number of convolutional layers per block
         "apply_pooling":[1,1, 1,1 ,1,0], # Whether to apply Max pooling in each block
         "apply_bn":[1,1,1,1,1,0], # Whether to apply batch normalization in each block
-        "num_blocks":4, # Number of extraction Blocks
+        "num_blocks":6, # Number of extraction Blocks
         "activation_function": torch.nn.ReLU, 
         "dropout_rate": 0.2
 } 
