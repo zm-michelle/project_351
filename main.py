@@ -11,7 +11,7 @@ import os
 
 EXPERIMENT_LOG_PATH = os.path.join('runs', 'experiment_logs.csv')
 
-def log_results(title, train_loss, test_loss, test_accuracy ,config, EXPERIMENT_LOG_PATH):
+def log_results(title, train_loss, test_loss, test_accuracy ,config):
 
     row = {
         "description": title,

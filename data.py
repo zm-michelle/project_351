@@ -38,7 +38,7 @@ def get_dataloaders( dataset_name, batch_size=256):
             transform=transform
         )
         testset = datasets.SVHN(
-            root='../data',
+            root='./data',
             split='test',
             download=True,
             transform=transform
@@ -46,21 +46,21 @@ def get_dataloaders( dataset_name, batch_size=256):
 
     elif dataset_name == "CIFAR-10":
         trainset = torchvision.datasets.CIFAR10(
-            root='../data', 
+            root='./data', 
             train=True,
             download=True, 
             transform=transform
         )
         testset = torchvision.datasets.CIFAR10(
             root='../data', 
-            train=True,
+            train=False,
             download=True, 
             transform=transform
         )
 
     elif dataset_name == "CIFAR-100":
         trainset = torchvision.datasets.CIFAR100(
-            root='../data', 
+            root='./data', 
             train=True,
             download=True, 
             transform=transform
