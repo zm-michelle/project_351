@@ -56,6 +56,8 @@ python transfer_learning/transfer_main.py
 ## Configuration Ecample
 
 ### Model Configs
+Change According to desired network depth
+#### Shallow Network
 
 ```python
 model_kwargs =  {
@@ -64,13 +66,29 @@ model_kwargs =  {
         "hidden_dims": [32, 128, 256, 512, 512, 128], # Hidden dimensions for both the convolutional channels and the fully connected layers
         "layers_per_block":[1,1,1,1], # Number of convolutional layers per block
         "apply_pooling":[1,1,1,0], # Whether to apply Max pooling in each block
-        "apply_bn":[1,1,1,1], # Whether to apply batch normalization in each block
+        "apply_bn":[1,1,1,0], # Whether to apply batch normalization in each block
         "num_blocks":4, # Number of extraction Blocks
         "activation_function": torch.nn.ReLU, 
         "dropout_rate": 0.2
 } 
 ```
 
+
+#### Deep Network
+
+```python
+model_kwargs =  {
+        "input_size": 32 , # IN this case since both the width and height of the images are the same we keep input size just the size of one.
+        "in_channels": 3, # Accounting for each of the RGB channels
+        "hidden_dims": [32, 128, 256, 512, 512,512,512, 128], # Hidden dimensions for both the convolutional channels and the fully connected layers
+        "layers_per_block":[1,1,1,1,1,1], # Number of convolutional layers per block
+        "apply_pooling":[1,1, 1,1 ,1,0], # Whether to apply Max pooling in each block
+        "apply_bn":[1,1,1,1,1,0], # Whether to apply batch normalization in each block
+        "num_blocks":4, # Number of extraction Blocks
+        "activation_function": torch.nn.ReLU, 
+        "dropout_rate": 0.2
+} 
+```
 ### Baseline Model Training Configs
 Each training experiment, with different learning techniques is stored in a list made up of sets that include both the name of the experiment and the configs.
 
@@ -101,6 +119,46 @@ run_configs = [
 ]
 
 ``` 
+
+## Fine-tuning Instructions
+Change the `model` key's value in the dictionary configs and pass an instantiated model to be configured in the following ways:
+
+### Partial Finetune
+```python
+  "model": create_transfer_learning_model(
+                pretrained_path=PRETRAINED_MODEL_PATH,
+                num_classes_source=10,
+                num_classes_target=100,
+                model_kwargs=base_model_kwargs,
+                freeze_backbone=True,
+                freeze_until_block=1,  # Freeze only first 2 blocks
+                device=DEVICE
+            ),
+```
+### Full Finetune
+```python
+  "model": create_transfer_learning_model(
+                pretrained_path=PRETRAINED_MODEL_PATH,
+                num_classes_source=10,
+                num_classes_target=100,
+                model_kwargs=base_model_kwargs,
+                freeze_backbone=False,
+                device=DEVICE
+            ),
+```
+
+### Frozen Backbone
+```python
+"model": create_transfer_learning_model(
+                pretrained_path=PRETRAINED_MODEL_PATH,
+                num_classes_source=10,
+                num_classes_target=100,
+                model_kwargs=base_model_kwargs,
+                freeze_backbone=True,
+                freeze_until_block=None,  # Freeze all conv blocks
+                device=DEVICE
+            ),
+```
 
 ## Execution flow
 
