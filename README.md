@@ -3,20 +3,20 @@
 A Pytorch based model and a set of functions that help implement both learning experiments for CIFAR-10, CIFAR-100 and SVHN datasets and transfer learning from CIFAR-10 to CIFAR-100 and SVHN
 
 ## Project Structure
-
-.
+```
+project_351/
 |- main.py # Main training script for baseline(source) models
 |- data.py # Gets dataloaders of augmented data for both test and train
 |- model.py # Baseline CNN arquitecture
 |- config.py # Dictionary configuration for experiments
 |- Utils.py # Training Loop and helperfunctions
 |- requirements.txt # Requirements
-|- ./transfer_learning
+|- transfer_learning/
 |---- transfer_configs.py # Dictionary configs for training
 |---- transfer_learning # Transfer learning functions
 |---- transfer_main #  Main Training script to transfer learning
 
-
+```
 ## CNN Arquitecture
 
 Configurable Convolutional Blocks
